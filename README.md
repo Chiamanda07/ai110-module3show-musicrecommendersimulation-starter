@@ -18,6 +18,16 @@ Replace this paragraph with your own summary of what your version does.
 ## How The System Works
 
 Explain your design in plain language.
+In real world systems, recommendations work in various ways with 2 basics : collaborative filtering, and context-based filtering. Collaborative basicallly means recommending new songs other users with similar taste listen to. Context based involves analyzing the audio.
+
+My system is using context-based filtering by analyzing the audio of a song and recommending it 
+
+The features that are most important from the `Song` would be its genre, mood, energy. acousticness, and tempo.
+
+My User profile will have the normal genre, mood & energy the user usually listens to.
+
+My recommender computes a score using this matrix: final_score = (0.4 × genre_score)+ (0.3 × mood_score)+ (0.3 × energy_score)
+ 
 
 Some prompts to answer:
 
