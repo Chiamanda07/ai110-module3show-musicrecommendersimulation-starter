@@ -24,9 +24,33 @@ My system is using context-based filtering by analyzing the audio of a song and 
 
 The features that are most important from the `Song` would be its genre, mood, energy. acousticness, and tempo.
 
-My User profile will have the normal genre, mood & energy the user usually listens to.
+My User profile stores the following preferences:
 
-My recommender computes a score using this matrix: final_score = (0.4 × genre_score)+ (0.3 × mood_score)+ (0.3 × energy_score)
+| Field | Type | Example |
+|---|---|---|
+| `genre` | text | `"pop"` |
+| `mood` | text | `"happy"` |
+| `energy` | float (0–1) | `0.8` |
+| `tempo_bpm` | number | `120` |
+| `valence` | float (0–1) | `0.75` |
+| `danceability` | float (0–1) | `0.80` |
+| `acousticness` | float (0–1) | `0.20` |
+
+My recommender computes a score for each song using this matrix:
+
+```
+final_score = (0.30 × genre_score)
+            + (0.25 × mood_score)
+            + (0.20 × energy_score)
+            + (0.10 × tempo_score)
+            + (0.05 × valence_score)
+            + (0.05 × danceability_score)
+            + (0.05 × acousticness_score)
+```
+
+- `genre_score` and `mood_score` are binary: `1.0` if the song matches the user's preference, `0.0` if not.
+- All float features (energy, valence, danceability, acousticness) are scored as `1 - abs(song_value - user_value)`.
+- `tempo_score` is normalized: `1 - abs(song_bpm - user_bpm) / 200` to bring it into the same 0–1 range as the other features.
  
 
 Some prompts to answer:
