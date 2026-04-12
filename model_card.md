@@ -61,29 +61,21 @@ Prompts:
 
 ## 6. Limitations and Bias 
 
-Where the system struggles or behaves unfairly. 
-
-Prompts:  
-
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
+The system's biggest structural weakness is that the catalog skews high-energy — the average song energy is ~0.60 — which means low-energy listeners consistently receive poor matches even when the algorithm is working correctly. Because energy proximity is calculated as a simple linear gap (`1.0 - |song_energy - target_energy|`), a user who wants calm, soft music (energy ~0.1) finds that most songs in the catalog score near zero on that signal, leaving the recommender with little meaningful data to rank by. During experiments, this showed up clearly with the "Acoustic but Intense" profile: no song in the catalog has both high energy and high acousticness simultaneously, so the system was forced to sacrifice one preference entirely. Additionally, genre matching is binary — a jazz fan gets full credit on the one jazz song and nothing on any other, even styles they would likely enjoy — which creates a filter bubble where underrepresented genres lock users into a single track recommendation regardless of k. These issues are catalog problems as much as algorithm problems: no weight-tuning can recommend music that was never added to the dataset.
 
 ---
 
 ## 7. Evaluation  
 
-How you checked whether the recommender behaved as expected. 
+Four user profiles were tested to check whether the scoring logic behaved as expected across normal and edge-case inputs.
 
-Prompts:  
+**Starter Profile** (pop, happy, energy 0.8) was the baseline — a typical listener who likes upbeat, danceable pop. The system reliably surfaced "Sunrise City" and "Gym Hero" at the top, which felt right. What was surprising is that "Gym Hero" — a song tagged as *intense*, not *happy* — kept appearing in the top 2 even for the happy pop profile. The reason: its energy (0.93) is very close to the user's target (0.8), which earns it nearly as much weight as a perfect genre match. Mood being a smaller signal (or disabled during experiments) meant the emotional mismatch barely cost it anything.
 
-- Which user profiles you tested  
-- What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
+**High-Energy Sad** (pop, sad, energy 0.9) tested whether the system could separate emotional tone from physical energy. It mostly could not — the top results were nearly identical to the Starter Profile because energy dominated. A truly "sad" song recommendation would require mood to carry more weight than the current scoring gives it.
 
-No need for numeric metrics unless you created some.
+**Unknown Genre — k-pop** (k-pop, euphoric, energy 0.88) tested what happens when a user's genre simply doesn't exist in the catalog. Every song scored 0 for genre, so rankings were decided entirely by energy and tempo proximity. All five results scored within 0.04 of each other — the system had almost no basis for differentiation and the playlist felt arbitrary.
+
+**Acoustic but Intense** (folk, intense, energy 1.0, acousticness 1.0) was the most revealing edge case. No song in the 20-song catalog has both high energy and high acousticness at the same time — these two features naturally conflict in real music. The system was forced to pick one and ignore the other, and the results (max score ~0.53) exposed a catalog gap that weight adjustments alone cannot fix.
 
 ---
 

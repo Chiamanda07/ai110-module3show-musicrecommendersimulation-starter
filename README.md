@@ -120,15 +120,7 @@ Removing mood dropped the max achievable score from 1.0 to 0.775. The rankings f
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
-
-Examples:
-
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
+The system silently disadvantages low-energy listeners because the catalog's average energy is ~0.60 — most songs simply don't score well for users who prefer calm or soft music, no matter how the weights are tuned. Genre matching is binary (full credit or zero), so users whose preferred genre appears only once in the 20-song catalog are effectively stuck with one good match and nineteen misses. The energy gap calculation also assumes a linear penalty, which treats a 0.3 gap the same way regardless of whether the user is at the top or bottom of the scale — a flaw that became visible when the "Acoustic but Intense" profile received universally low scores because no catalog song satisfies both signals at once. These are catalog-level problems: no amount of weight adjustment fixes a dataset that doesn't represent certain listener types.
 
 ---
 
