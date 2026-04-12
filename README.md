@@ -48,23 +48,20 @@ final_score = (0.30 × genre_score)
             + (0.05 × acousticness_score)
 ```
 
-This was the output recommendation in the terminal when ran:
-![terminal output](image.png)
-
+Some other features of the matrix
 - `genre_score` and `mood_score` are binary: `1.0` if the song matches the user's preference, `0.0` if not.
 - All float features (energy, valence, danceability, acousticness) are scored as `1 - abs(song_value - user_value)`.
 - `tempo_score` is normalized: `1 - abs(song_bpm - user_bpm) / 200` to bring it into the same 0–1 range as the other features.
+
+
+This was the output recommendation for the user profile looks lik in the terminal when ran:
+![terminal output](image.png)
+
  
-
-Some prompts to answer:
-
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-
-You can include a simple diagram or bullet list if helpful.
+For the other test profiles used in `main.py`, this was the output:
+| High-Energy Sad | Unknown Genre (k-pop) | Acoustic but Intense |
+|---|---|---|
+| ![high_energy_sad](image-1.png) | ![unknown_genre](image-2.png) | ![acoustic_but_intense](image-3.png) |
 
 ---
 
