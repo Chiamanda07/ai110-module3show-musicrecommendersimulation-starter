@@ -73,44 +73,45 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
     """
     reasons = []
 
-    # Genre: 1.0 if exact match, 0.0 otherwise (weight: 0.30)
+    # Genre: 1.0 if exact match, 0.0 otherwise (weight: 0.15)
     genre_score = 1.0 if song["genre"] == user_prefs["genre"] else 0.0
-    weighted_genre = 0.30 * genre_score
+    weighted_genre = 0.15 * genre_score
     reasons.append(f"genre match (+{weighted_genre:.2f})")
 
-    # Mood: 1.0 if exact match, 0.0 otherwise (weight: 0.25)
-    mood_score = 1.0 if song["mood"] == user_prefs["mood"] else 0.0
-    weighted_mood = 0.25 * mood_score
-    reasons.append(f"mood match (+{weighted_mood:.2f})")
+    # EXPERIMENT: mood check disabled
+    # # Mood: 1.0 if exact match, 0.0 otherwise (weight: 0.225)
+    # mood_score = 1.0 if song["mood"] == user_prefs["mood"] else 0.0
+    # weighted_mood = 0.225 * mood_score
+    # reasons.append(f"mood match (+{weighted_mood:.2f})")
 
-    # Energy: proximity to target, 0.0–1.0 range (weight: 0.20)
+    # Energy: proximity to target, 0.0–1.0 range (weight: 0.40)
     energy_score = max(0.0, 1.0 - abs(song["energy"] - user_prefs["energy"]))
-    weighted_energy = 0.20 * energy_score
+    weighted_energy = 0.40 * energy_score
     reasons.append(f"energy fit (+{weighted_energy:.2f})")
 
-    # Tempo: normalize difference over 60 BPM max gap (weight: 0.10)
+    # Tempo: normalize difference over 60 BPM max gap (weight: 0.09)
     tempo_score = max(0.0, 1.0 - abs(song["tempo_bpm"] - user_prefs["tempo_bpm"]) / 60.0)
-    weighted_tempo = 0.10 * tempo_score
+    weighted_tempo = 0.09 * tempo_score
     reasons.append(f"tempo fit (+{weighted_tempo:.2f})")
 
-    # Valence: proximity to target (weight: 0.05)
+    # Valence: proximity to target (weight: 0.045)
     valence_score = max(0.0, 1.0 - abs(song["valence"] - user_prefs["valence"]))
-    weighted_valence = 0.05 * valence_score
+    weighted_valence = 0.045 * valence_score
     reasons.append(f"valence fit (+{weighted_valence:.2f})")
 
-    # Danceability: proximity to target (weight: 0.05)
+    # Danceability: proximity to target (weight: 0.045)
     dance_score = max(0.0, 1.0 - abs(song["danceability"] - user_prefs["danceability"]))
-    weighted_dance = 0.05 * dance_score
+    weighted_dance = 0.045 * dance_score
     reasons.append(f"danceability fit (+{weighted_dance:.2f})")
 
-    # Acousticness: proximity to target (weight: 0.05)
+    # Acousticness: proximity to target (weight: 0.045)
     acoustic_score = max(0.0, 1.0 - abs(song["acousticness"] - user_prefs["acousticness"]))
-    weighted_acoustic = 0.05 * acoustic_score
+    weighted_acoustic = 0.045 * acoustic_score
     reasons.append(f"acousticness fit (+{weighted_acoustic:.2f})")
 
+    # NOTE: max score is ~0.775 while mood is disabled
     final_score = (
         weighted_genre
-        + weighted_mood
         + weighted_energy
         + weighted_tempo
         + weighted_valence

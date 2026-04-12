@@ -102,11 +102,19 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
+**Experiment 1 — Weight Shift: energy doubled (0.20→0.40), genre halved (0.30→0.15)**
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+Genre used to be the strongest signal; doubling energy made physical feel the dominant factor. Songs with a close energy match now outscore genre-matched songs that feel wrong tempo-wise. For the Starter Profile, "Sunrise City" held the #1 spot even though it only earned +0.15 for genre — its near-perfect energy fit (+0.39) carried it.
+
+**Experiment 2 — Feature Removal: mood check disabled**
+
+Removing mood dropped the max achievable score from 1.0 to 0.775. The rankings for the "High-Energy Sad" profile shifted noticeably. Energetic songs now rank highly no matter the mood, since mood mismatches no longer cost points.
+
+**How the system behaved for different user types**
+
+- *Matching genre + energy*: Scores clustered near 0.70–0.76 — strong, confident picks.
+- *Unknown genre (k-pop)*: Every song scored 0.55–0.59 with near-identical scores because nobody earned genre points; energy became the only real differentiator.
+- *Contradictory profile (acoustic but intense)*: Scores tanked to 0.42–0.53 because high energy and high acousticness rarely co-exist in the catalog, leaving the system unable to satisfy both signals at once.
 
 ---
 
