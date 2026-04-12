@@ -48,6 +48,9 @@ final_score = (0.30 × genre_score)
             + (0.05 × acousticness_score)
 ```
 
+This was the output recommendation in the terminal when ran:
+![terminal output](image.png)
+
 - `genre_score` and `mood_score` are binary: `1.0` if the song matches the user's preference, `0.0` if not.
 - All float features (energy, valence, danceability, acousticness) are scored as `1 - abs(song_value - user_value)`.
 - `tempo_score` is normalized: `1 - abs(song_bpm - user_bpm) / 200` to bring it into the same 0–1 range as the other features.
