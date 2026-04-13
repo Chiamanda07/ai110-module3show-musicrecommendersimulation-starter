@@ -64,7 +64,7 @@ Two experiments were also run: doubling the energy weight showed that energy alo
 
 The data matters more than the algorithm. No matter how I adjusted the weights, the catalog's gaps (too few calm songs, abscence of some genres) created bad results for certain users that math alone couldn't fix.
 
-**How AI tools helped — and when I needed to double-check**
+**How AI tools helped and when I needed to double-check**
 
 AI tools were fast at applying weight changes and verifying the math summed to 1.0. But I still read the file after every edit to make sure the logic was actually correct, not just syntactically clean.
 
