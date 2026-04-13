@@ -33,7 +33,7 @@ The system works best when the user's preferences are well-represented in the ca
 
 ## 6. Limitations and Bias
 
-The catalog skews high-energy — the average song energy is around 0.60 — so low-energy listeners get poor matches even when the algorithm is working correctly. A user who wants calm, soft music will find that almost every song scores near zero on energy, leaving the system with nothing useful to rank by. Genre matching is also all-or-nothing: a jazz fan gets full credit for the one jazz song and zero credit for everything else, even songs they might enjoy. This creates a filter bubble where underrepresented genres produce nearly useless results. Finally, the system currently has mood disabled from experiments, which means two users with opposite emotional preferences but similar energy levels get identical playlists.
+The catalog skews high-energy (the average song energy is around 0.60) so low-energy listeners get poor matches even when the algorithm is working correctly. A user who wants calm, soft music will find that almost every song scores near zero on energy, leaving the system with nothing useful to rank by. Genre matching is also all-or-nothing: a jazz fan gets full credit for the one jazz song and zero credit for everything else, even songs they might enjoy. This creates a filter bubble where underrepresented genres produce nearly useless results. Finally, the system currently has mood disabled from experiments, which means two users with opposite emotional preferences but similar energy levels get identical playlists.
 
 ---
 
